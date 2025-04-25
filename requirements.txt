@@ -1,0 +1,9 @@
+ftfy 
+regex 
+tqdm
+faiss-gpu
+huggingface-hub==0.25.0
+streamlit
+numpy==1.26.2
+transformers==4.51.3 
+omegaconf==2.3.0
