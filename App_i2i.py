@@ -5,7 +5,7 @@ import streamlit as st
 
 import time
 from utils.extract_features import load_model
-from utils.retrieval import return_image_id, return_image_crop_id
+from utils.retrieval import return_img_to_img, return_imgcrop_to_img
 from utils.person_crop import crop_person
 from utils import config
 # --- Tải và Cache Model, Index ---
@@ -29,7 +29,7 @@ def return_id(img_path=None):
         if crop_image is None:
             return [], [], None
         #score, idx = return_image_crop_id(crop_image, top_k=config.TOP_K)
-        score, idx = return_image_id(img_path, top_k=config.TOP_K)
+        score, idx = return_img_to_img(img_path, top_k=config.TOP_K)
     else:
         return [], [], None
     return score, idx, crop_image

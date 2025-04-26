@@ -7,11 +7,11 @@ def write_bin_file(feats, bin_path: str, type_model, method='cosine', feature_sh
 
     if method == 'L2':
         # Normalize trước khi dùng L2 để mô phỏng cosine similarity
-        faiss.normalize_L2(feats)
+        #faiss.normalize_L2(feats)
         index = faiss.IndexFlatL2(feature_shape)
     elif method == 'cosine':
         # Với cosine FAISS dùng dot-product nên cần chuẩn hóa
-        faiss.normalize_L2(feats)
+        #faiss.normalize_L2(feats)
         index = faiss.IndexFlatIP(feature_shape)
     else:
         raise ValueError(f"{method} not supported")

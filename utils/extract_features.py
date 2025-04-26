@@ -3,7 +3,7 @@ from tqdm import tqdm
 import numpy as np
 import torch
 
-from transformers import AutoModel, AutoProcessor
+from transformers import AutoModel, AutoProcessor, AutoModelForImageTextToText
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from transformers.image_utils import load_image
 
@@ -18,12 +18,16 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def load_model(type_model="img"):
     if type_model=="img":
-        preprocess = AutoProcessor.from_pretrained(config.MODEL_IMAGE_NAME)
+        processor = AutoProcessor.from_pretrained(config.MODEL_IMAGE_NAME)
         model = AutoModel.from_pretrained(config.MODEL_IMAGE_NAME, device_map="cuda:0").eval()
     elif type_model=="text":
-        preprocess = BlipProcessor.from_pretrained(config.MODEL_TEXT_NAME)
+        processor = BlipProcessor.from_pretrained(config.MODEL_TEXT_NAME)
         model = BlipForConditionalGeneration.from_pretrained(config.MODEL_TEXT_NAME, device_map="cuda:0").eval()
-    return model, preprocess
+    elif type_model=="llm":
+        processor = AutoProcessor.from_pretrained(config.MODEL_LLM_NAME)
+        model = AutoModelForImageTextToText.from_pretrained(config.MODEL_LLM_NAME, device_map="cuda:0")
+
+    return model, processor
 
 def extract_features_siglip(data_path, dict_path, model_name, method):
     model, preprocess = load_model(type_model="img")
